@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     use HasFactory;
-
+    protected $guarded = [];
     /**
      * @var int|mixed
      */
+    protected $table = 'contacts';
+    protected $primaryKey = 'id';
     public function path(): string
     {
         return route('contacts.show', $this);

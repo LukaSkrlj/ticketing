@@ -1,15 +1,4 @@
-<?php
-
-namespace App\Http\Controllers;
-
-use Illuminate\Support\Facades\Auth;
-use App\Models\Contact;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-
-class ContactController extends Controller
-{
-    public function __construct(){
+public function __construct(){
         $this->middleware('auth');
     }
     public function index(){
@@ -71,4 +60,3 @@ class ContactController extends Controller
             'user_id' => 'exists:users,id'
         ]);
     }
-}

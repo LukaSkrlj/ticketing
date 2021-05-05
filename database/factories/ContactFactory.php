@@ -3,7 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\Contact;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\App;
 
 class ContactFactory extends Factory
 {
@@ -22,7 +24,13 @@ class ContactFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'first_name' => $this->faker->name,
+            'last_name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'phone_number' => $this->faker->phoneNumber,
+            'address' => $this->faker->address,
+            'user_id' => User::all()->random(1)->first()->id,
+
         ];
     }
 }
