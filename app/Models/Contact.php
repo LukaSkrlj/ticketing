@@ -15,6 +15,7 @@ class Contact extends Model
      */
     protected $table = 'contacts';
     protected $primaryKey = 'id';
+
     public function path(): string
     {
         return route('contacts.show', $this);

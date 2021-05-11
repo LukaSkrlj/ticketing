@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ticket;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -12,9 +13,14 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->middleware('role:admin|user');
+    }
+
     public function index()
     {
-        //
+        $tickets = Ticket::query()->where('contact_id', '=',auth()->id())->get();
+        return view('tickets.index',['tickets' => $tickets]);
     }
 
     /**
@@ -24,7 +30,7 @@ class TicketController extends Controller
      */
     public function create()
     {
-        //
+        return view('tickets.create');
     }
 
     /**
@@ -35,7 +41,10 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ticket = new Ticket($this->validateTicket($request));
+        $ticket->save();
+
+        return redirect(route('tickets.index'));
     }
 
     /**
@@ -46,7 +55,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
+        return view('tickets.show',['ticket'=>$ticket]);
     }
 
     /**
@@ -57,7 +66,7 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        //
+        return view('tickets.edit', compact('ticket'));
     }
 
     /**
@@ -69,7 +78,9 @@ class TicketController extends Controller
      */
     public function update(Request $request, Ticket $ticket)
     {
-        //
+        $ticket->update($this->validateTicket($request));
+
+        return redirect($ticket->path());
     }
 
     /**
@@ -78,8 +89,18 @@ class TicketController extends Controller
      * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ticket $ticket)
+    public function destroy($id)
     {
-        //
+        $ticket = Ticket::query()->findOrFail($id);
+        $ticket->delete();
+        return redirect('/tickets')->with('success', 'Ticket deleted');
+    }
+
+    protected function validateTicket(Request $request): array
+    {
+        return $request->validate([
+            'description' => 'required',
+            'contact_id' => 'exists:contacts,id'
+        ]);
     }
 }

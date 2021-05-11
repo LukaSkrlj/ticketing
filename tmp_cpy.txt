@@ -1,62 +1,40 @@
-public function __construct(){
-        $this->middleware('auth');
-    }
-    public function index(){
-        $contacts = Contact::query()->where('user_id', '=',auth()->id())->get();
+@extends('layout')
 
-        return view('contacts', ['contacts'=>$contacts]);
-    }
+@section('contact')
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-white border-b border-gray-200">
+                    <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-    public function show(Contact $contact){
-        return view('contacts.show',['contact'=>$contact]);
-    }
-
-    public function create(){
-        return view('contacts.create');
-    }
-
-    public function store(){
-        #dump(request()->all());
-        $this->validateContact();
-
-        $contact = new Contact(request([
-            'first_name',
-            'last_name',
-            'email',
-            'phone_number',
-            'address'
-        ]));
-        $contact->user_id = auth()->id();
-        $contact->save();
-
-        return redirect(route('contacts.index'));
-
-    }
-
-    public function edit(Contact $contact){
-        return view('contacts.edit', compact('contact'));
-    }
-
-    public function update(Contact $contact){
-        $contact->update($this->validateContact());
-
-        return redirect($contact->path());
-    }
-
-    public function destroy($id){
-        $contact = Contact::query()->find($id);
-        $contact->delete();
-        return redirect('/contacts')->with('success', 'Kontakt je izbrisan');
-    }
-
-    protected function validateContact(): array
-    {
-        return request()->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required',
-            'phone_number' => 'required',
-            'address' => 'required',
-            'user_id' => 'exists:users,id'
-        ]);
-    }
+                    <form method="POST" action="/users">
+                        @csrf
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="grid grid-rows-3 gap-6">
+                                <div>
+                                    <h2 class="block font-medium text-sm text-gray-700">Name</h2>
+                                    <x-input id="name" class="block mt-1 w-full" type="text" name="first_name" value="Name" autofocus />
+                                </div>
+                                <div>
+                                    <h2 class="block font-medium text-sm text-gray-700">Email</h2>
+                                    <x-input id="email" class="block mt-1 w-full" type="email" name="email" value="Email" autofocus />
+                                </div>
+                                <div>
+                                    <h2 class="block font-medium text-sm text-gray-700">Password</h2>
+                                    <x-input id="password" class="block mt-1 w-full" type="password" name="address" value="Password" autofocus />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-end mt-4">
+                            <x-button class="ml-3">
+                                {{ __('Stvori korisnika') }}
+                            </x-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+<a href="{{ route('users.edit') }}" class="inline-flex items-center px-4 py-2 bg-blue-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Edit</a>
+                    <a href="{{ route('users.delete') }}" class="inline-flex items-center px-4 py-2 bg-red-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Delete</a>

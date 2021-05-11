@@ -10,12 +10,12 @@ use Illuminate\Http\Request;
 class ContactController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware('role:admin|user');
     }
     public function index(){
         $contacts = Contact::query()->where('user_id', '=',auth()->id())->get();
 
-        return view('contacts', ['contacts'=>$contacts]);
+        return view('contacts.index', ['contacts'=>$contacts]);
     }
 
     public function show(Contact $contact){
@@ -26,8 +26,7 @@ class ContactController extends Controller
         return view('contacts.create');
     }
 
-    public function store(){
-        #dump(request()->all());
+    public function store(Request $request){
         $this->validateContact();
 
         $contact = new Contact(request([
@@ -55,9 +54,9 @@ class ContactController extends Controller
     }
 
     public function destroy($id){
-        $contact = Contact::query()->find($id);
+        $contact = Contact::query()->findOrFail($id);
         $contact->delete();
-        return redirect('/contacts')->with('success', 'Kontakt je izbrisan');
+        return redirect('/contacts')->with('success', 'Contact deleted');
     }
 
     protected function validateContact(): array

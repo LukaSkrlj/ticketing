@@ -9,7 +9,7 @@
                     <div class="grid grid-cols-2 gap-6">
                         <div class="grid grid-rows-3 gap-6">
                             <div>
-                                <h2 class="block font-medium text-sm text-gray-700">Ime</h2>
+                                <h2 class="block font-medium text-sm text-gray-700">First name</h2>
                                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                                     {{ $contact->first_name }}
                                 </h2>
@@ -21,7 +21,7 @@
                                 </h2>
                             </div>
                             <div>
-                                <h2 class="block font-medium text-sm text-gray-700">Adresa</h2>
+                                <h2 class="block font-medium text-sm text-gray-700">Address</h2>
                                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                                     {{ $contact->address }}
                                 </h2>
@@ -29,7 +29,7 @@
                         </div>
                         <div class="grid grid-rows-3 gap-6">
                             <div>
-                                <h2 class="block font-medium text-sm text-gray-700">Prezime</h2>
+                                <h2 class="block font-medium text-sm text-gray-700">Last name</h2>
                                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                                     {{$contact->last_name}}
                                 </h2>
@@ -44,8 +44,8 @@
                     </div>
 
                 </div>
-                <a href="{{ $contact->id }}/edit" class="inline-flex items-center px-4 py-2 bg-blue-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Edit</a>
-                <a href="{{ $contact->id }}/delete" class="inline-flex items-center px-4 py-2 bg-red-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Delete</a>
+                <a href="{{route('contacts.edit', ['contact' => $contact->id]) }}" class="inline-flex items-center px-4 py-2 bg-blue-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Edit</a>
+                <a href="{{route('contacts.delete', ['contact' => $contact->id]) }}" class="inline-flex items-center px-4 py-2 bg-red-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Delete</a>
 
             </div>
         </div>

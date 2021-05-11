@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Contact;
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TicketFactory extends Factory
@@ -22,7 +24,8 @@ class TicketFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'contact_id' => Contact::all()->random(1)->first()->id,
+            'description' => $this->faker->text(250),
         ];
     }
 }

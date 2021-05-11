@@ -16,9 +16,19 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('contacts')" :active="request()->routeIs('contacts')">
+                    <x-nav-link :href="route('contacts.index')" :active="request()->routeIs('contacts.index')">
                         {{ __('Contacts') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('tickets.index')" :active="request()->routeIs('tickets.index')">
+                        {{ __('Tickets') }}
+                    </x-nav-link>
+
+                    @role('admin')
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                        {{ __('Users') }}
+                    </x-nav-link>
+                    @endrole
                 </div>
             </div>
 
