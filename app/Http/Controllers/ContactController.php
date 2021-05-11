@@ -27,15 +27,9 @@ class ContactController extends Controller
     }
 
     public function store(Request $request){
-        $this->validateContact();
 
-        $contact = new Contact(request([
-            'first_name',
-            'last_name',
-            'email',
-            'phone_number',
-            'address'
-        ]));
+
+        $contact = new Contact($this->validateContact($request));
         $contact->user_id = auth()->id();
         $contact->save();
 
@@ -47,8 +41,8 @@ class ContactController extends Controller
         return view('contacts.edit', compact('contact'));
     }
 
-    public function update(Contact $contact){
-        $contact->update($this->validateContact());
+    public function update(Request $request, Contact $contact){
+        $contact->update($this->validateContact($request));
 
         return redirect($contact->path());
     }
@@ -59,9 +53,9 @@ class ContactController extends Controller
         return redirect('/contacts')->with('success', 'Contact deleted');
     }
 
-    protected function validateContact(): array
+    protected function validateContact(Request $request): array
     {
-        return request()->validate([
+        return $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required',
