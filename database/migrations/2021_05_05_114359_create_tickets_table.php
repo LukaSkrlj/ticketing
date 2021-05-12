@@ -17,7 +17,7 @@ class CreateTicketsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('contact_id');
             $table->unsignedBigInteger('user_id');
-
+            $table->string('name');
             $table->string('type');
             $table->text('description');
             $table->timestamps();

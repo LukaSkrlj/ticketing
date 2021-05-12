@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class ContactController extends Controller
 {
     public function __construct(){
-        $this->middleware('role:admin|user');
+        $this->middleware('auth');
     }
     public function index(){
         $contacts = Contact::query()->where('user_id', '=',auth()->id())->get();

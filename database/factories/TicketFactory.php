@@ -24,7 +24,10 @@ class TicketFactory extends Factory
     public function definition()
     {
         return [
+            'user_id' => User::all()->random(1)->first()->id,
             'contact_id' => Contact::all()->random(1)->first()->id,
+            'type' => $this->faker->word,
+            'name' => $this->faker->word,
             'description' => $this->faker->text(250),
         ];
     }

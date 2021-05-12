@@ -11,7 +11,7 @@
                         <div class="grid grid-cols-2 gap-6">
                             <div class="grid grid-rows-3 gap-6">
                                 <div>
-                                    <h2 class="block font-medium text-sm text-gray-700">Ime</h2>
+                                    <h2 class="block font-medium text-sm text-gray-700">First Name</h2>
                                     <x-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')" autofocus />
                                 </div>
                                 <div>
@@ -19,13 +19,13 @@
                                     <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" autofocus />
                                 </div>
                                 <div>
-                                    <h2 class="block font-medium text-sm text-gray-700">Adresa</h2>
+                                    <h2 class="block font-medium text-sm text-gray-700">Address</h2>
                                     <x-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')" autofocus />
                                 </div>
                             </div>
                             <div class="grid grid-rows-3 gap-6">
                                 <div>
-                                    <h2 class="block font-medium text-sm text-gray-700">Prezime</h2>
+                                    <h2 class="block font-medium text-sm text-gray-700">Last Name</h2>
                                     <x-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" autofocus />
                                 </div>
                                 <div>

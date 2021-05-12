@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -14,13 +16,19 @@ class TicketController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function __construct(){
-        $this->middleware('role:admin|user');
+        $this->middleware('auth');
     }
 
     public function index()
     {
-        $tickets = Ticket::query()->where('contact_id', '=',auth()->id())->get();
-        return view('tickets.index',['tickets' => $tickets]);
+        $tickets = Ticket::query()->where('user_id', '=',auth()->id())->get();
+        $contacts = Contact::all();
+        $users = User::all();
+        return view('tickets.index',[
+            'tickets' => $tickets,
+            'contacts' => $contacts,
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -30,7 +38,12 @@ class TicketController extends Controller
      */
     public function create()
     {
-        return view('tickets.create');
+        $users = User::all();
+        $contacts = Contact::all();
+        return view('tickets.create', [
+            'users'=>$users,
+            'contacts'=>$contacts,
+            ]);
     }
 
     /**
@@ -99,8 +112,11 @@ class TicketController extends Controller
     protected function validateTicket(Request $request): array
     {
         return $request->validate([
+            'name' => 'required',
             'description' => 'required',
-            'contact_id' => 'exists:contacts,id'
+            'type' => 'required',
+            'contact_id' => 'exists:contacts,id',
+            'user_id' => 'exists:users,id'
         ]);
     }
 }
