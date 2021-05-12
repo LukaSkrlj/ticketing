@@ -17,8 +17,9 @@
                     <div class="p-6 bg-white border-b border-gray-200">
                         <div class="grid grid-cols-5 gap-6">
                         @foreach($tickets as $ticket)
+                            <a href="{{route('tickets.show', ['ticket'=>$ticket])}}">
+                            <div class="mx-8 flex flex-col md:flex-col md:max-w-4xl max-w-sm mx-auto bg-white border border-green-900 my-5 shadow-2xl rounded-lg hover:opacity-70">
 
-                            <div class="flex flex-col md:flex-col md:max-w-4xl max-w-sm mx-auto bg-white border border-green-900 my-5 shadow-2xl rounded-lg">
                                 <div class="p-4 md:w-1/2">
                                     <h2 class="block font-medium text-sm text-gray-700">Name</h2>
                                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -46,7 +47,9 @@
                                         {{ $ticket->contact()->first()->last_name }}
                                     </h2>
                                 </div>
+
                             </div>
+                            </a>
                         @endforeach
 
 
