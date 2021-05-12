@@ -21,12 +21,12 @@
                     @foreach($users as $user)
                         <div class="p-4 border-b border-gray-200 flex justify-between">
                             <div class="text-xl font-medium">
-                                <a href="users/{{ $user->id }}">{{$user->name}}</a>
+                                <a href="{{ route('users.show', ['user'=>$user]) }}">{{$user->name}}</a>
 
                             </div>
                             <div>
-                                <a href="users/{{ $user->id }}/edit" class="flex items-end inline-flex px-4 py-2 bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-900 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Edit</a>
-                                <a href="users/{{ $user->id }}/delete" class="flex items-end inline-flex items-center px-4 py-2 bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-900 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Delete</a>
+                                <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="flex items-end inline-flex px-4 py-2 bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-900 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Edit</a>
+                                <a href="{{ route('users.delete', ['user' => $user->id]) }}" class="flex items-end inline-flex items-center px-4 py-2 bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-900 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Delete</a>
 
                             </div>
                         </div>
