@@ -7,6 +7,7 @@ use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
@@ -19,16 +20,48 @@ class TicketController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $tickets = Ticket::query()->where('user_id', '=',auth()->id())->get();
-        $contacts = Contact::all();
-        $users = User::all();
-        return view('tickets.index',[
-            'tickets' => $tickets,
-            'contacts' => $contacts,
-            'users' => $users,
-        ]);
+        $user = Auth::user();
+        $tickets = Ticket::query();
+        $order = $request->query('order');
+        $search = $request->query('search');
+        $search_option = $request->query('search_option');
+
+        if (!$user->hasRole('admin')){
+
+            $tickets = $tickets->where('user_id', '=', $user->id);
+
+        }
+
+        if ($search){
+
+            if(!$search_option){
+
+                $search_option = 'name';
+
+            }
+
+            if($user->hasRole('admin') && $search_option == 'user_id'){
+
+                $search = User::query()->where('name', 'LIKE', "%{$search}%")->pluck('id')->toArray();
+
+                $tickets = $tickets->whereIn($search_option, $search);
+
+            } else {
+
+                $tickets = $tickets->where($search_option, 'LIKE', "%{$search}%");
+
+            }
+
+        }
+
+        if($order){
+
+            $tickets = $tickets->orderBy($order);
+
+        }
+        return view('tickets.index',['tickets' => $tickets->paginate(15)]);
     }
 
     /**
@@ -79,7 +112,13 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        return view('tickets.edit', compact('ticket'));
+        $users = User::all();
+        $contacts = Contact::all();
+        return view('tickets.edit',[
+            'ticket'=>$ticket,
+            'users'=>$users,
+            'contacts'=>$contacts,
+        ]);
     }
 
     /**

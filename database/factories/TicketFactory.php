@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Contact;
 use App\Models\Ticket;
+use App\Models\TicketType;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -26,7 +27,7 @@ class TicketFactory extends Factory
         return [
             'user_id' => User::all()->random(1)->first()->id,
             'contact_id' => Contact::all()->random(1)->first()->id,
-            'type' => $this->faker->word,
+            'type' => TicketType::all()->random(1)->first()->id,
             'name' => $this->faker->word,
             'description' => $this->faker->text(250),
         ];

@@ -2,24 +2,73 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Contact;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
 
 class ContactController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
     }
-    public function index(){
-        $contacts = Contact::query()->where('user_id', '=',auth()->id())->get();
+    public function index(Request $request){
 
-        return view('contacts.index', ['contacts'=>$contacts]);
+        $user = Auth::user();
+        $contacts = Contact::query();
+        $order = $request->query('order');
+        $search = $request->query('search');
+        $search_option = $request->query('search_option');
+
+        if (!$user->hasRole('admin')){
+
+            $contacts = $contacts->where('user_id', '=', $user->id);
+
+        }
+
+        if ($search){
+
+            if(!$search_option){
+
+                $search_option = 'first_name';
+
+            }
+
+            if($user->hasRole('admin') && $search_option == 'user_id'){
+
+                $search = User::query()->where('name', 'LIKE', "%{$search}%")->pluck('id')->toArray();
+
+                $contacts = $contacts->whereIn($search_option, $search);
+
+            } else {
+
+                $contacts = $contacts->where($search_option, 'LIKE', "%{$search}%");
+
+            }
+
+        }
+
+        if($order){
+
+            $contacts = $contacts->orderBy($order);
+
+        }
+
+        return view('contacts.index', [
+            'contacts'=>$contacts->paginate(15),
+        ]);
     }
 
     public function show(Contact $contact){
-        return view('contacts.show',['contact'=>$contact]);
+        $tickets = Ticket::query()->where('contact_id', $contact->id)->get();
+        return view('contacts.show', [
+            'contact'=>$contact,
+            'tickets'=>$tickets
+        ]);
     }
 
     public function create(){

@@ -19,11 +19,32 @@ class UserController extends Controller
         $this->middleware('role:admin');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $users = User::query();
+        $order = $request->query('order');
+        $search = $request->query('search');
+        $search_option = $request->query('search_option');
 
-        return view('users.index', ['users' => $users]);
+        if ($search) {
+
+            if (!$search_option) {
+
+                $search_option = 'name';
+
+            }
+
+                $users = $users->where($search_option, 'LIKE', "%{$search}%");
+
+        }
+
+        if($order){
+
+            $users = $users->orderBy($order);
+
+        }
+
+        return view('users.index', ['users' => $users->paginate(15)]);
     }
 
     /**
@@ -101,6 +122,7 @@ class UserController extends Controller
     {
         $ticket = User::query()->find($id);
         $ticket->delete();
+        dd($id);
         return redirect('/users')->with('success', 'User is deleted');
     }
 

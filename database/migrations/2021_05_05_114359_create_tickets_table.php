@@ -16,9 +16,9 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('contact_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('name');
-            $table->string('type');
+            $table->string('type')->nullable();
             $table->text('description');
             $table->timestamps();
 
@@ -30,7 +30,10 @@ class CreateTicketsTable extends Migration
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onDelete('set null');
+
+
         });
     }
 

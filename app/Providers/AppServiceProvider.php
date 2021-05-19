@@ -25,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         #Checkpoint
-        Paginator::useBootstrap();
+        Paginator::defaultView('vendor.pagination.tailwind');
+
+        Paginator::defaultSimpleView('vendor.pagination.tailwind');
     }
 }
