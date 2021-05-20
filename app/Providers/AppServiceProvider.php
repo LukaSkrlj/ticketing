@@ -2,11 +2,16 @@
 
 namespace App\Providers;
 
+use App\Models\Contact;
+use App\Policies\ContactPolicy;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
+    protected $policies = [
+        Contact::class => ContactPolicy::class,
+    ];
     /**
      * Register any application services.
      *

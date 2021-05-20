@@ -64,7 +64,11 @@ class ContactController extends Controller
     }
 
     public function show(Contact $contact){
+
+        $this->authorize('view', $contact);
+
         $tickets = Ticket::query()->where('contact_id', $contact->id)->get();
+
         return view('contacts.show', [
             'contact'=>$contact,
             'tickets'=>$tickets
@@ -77,7 +81,6 @@ class ContactController extends Controller
 
     public function store(Request $request){
 
-
         $contact = new Contact($this->validateContact($request));
         $contact->user_id = auth()->id();
         $contact->save();
@@ -87,17 +90,22 @@ class ContactController extends Controller
     }
 
     public function edit(Contact $contact){
+        $this->authorize('update', $contact);
+
         return view('contacts.edit', compact('contact'));
     }
 
     public function update(Request $request, Contact $contact){
+        $this->authorize('update', $contact);
+
         $contact->update($this->validateContact($request));
 
         return redirect($contact->path());
     }
 
-    public function destroy($id){
-        $contact = Contact::query()->findOrFail($id);
+    public function destroy(Contact $contact){
+        $this->authorize('delete', $contact);
+        $contact = Contact::query()->findOrFail($contact->id);
         $contact->delete();
         return redirect('/contacts')->with('success', 'Contact deleted');
     }

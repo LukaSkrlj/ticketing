@@ -2,6 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\{
+    User,
+    Ticket,
+    Contact
+};
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -16,14 +21,23 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Role::create(['name' => 'admin']);
-        $this->call(TicketTypesSeeder::class);
-        \App\Models\User::factory(10)->create();
-        \App\Models\User::factory()->create([
-            'name' => 'Luka',
+        $user = User::query()->create([
+            'name' => 'Admin',
             'password' => '12345678',
             'email' => 'a@a.com'
         ]);
-        \App\Models\Contact::factory(10)->create();
-        \App\Models\Ticket::factory(10)->create();
+        $user->assignRole('admin');
+
+        User::query()->create([
+            'name' => 'User',
+            'password' => '12345678',
+            'email' => 'u@u.com'
+        ]);
+
+        $this->call(TicketTypesSeeder::class);
+
+        User::factory(10)->create();
+        Contact::factory(20)->create();
+        Ticket::factory(40)->create();
     }
 }

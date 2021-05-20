@@ -71,6 +71,7 @@ class TicketController extends Controller
      */
     public function create()
     {
+
         $users = User::all();
         $contacts = Contact::all();
         return view('tickets.create', [
@@ -101,6 +102,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
+        $this->authorize('view', $ticket);
         return view('tickets.show',['ticket'=>$ticket]);
     }
 
@@ -112,6 +114,7 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
+        $this->authorize('update', $ticket);
         $users = User::all();
         $contacts = Contact::all();
         return view('tickets.edit',[
@@ -130,6 +133,7 @@ class TicketController extends Controller
      */
     public function update(Request $request, Ticket $ticket)
     {
+        $this->authorize('update', $ticket);
         $ticket->update($this->validateTicket($request));
 
         return redirect($ticket->path());
@@ -141,9 +145,10 @@ class TicketController extends Controller
      * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ticket $ticket)
     {
-        $ticket = Ticket::query()->findOrFail($id);
+        $this->authorize('delete', $ticket);
+        $ticket = Ticket::query()->findOrFail($ticket->id);
         $ticket->delete();
         return redirect('/tickets')->with('success', 'Ticket deleted');
     }

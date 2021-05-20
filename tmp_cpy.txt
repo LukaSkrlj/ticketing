@@ -1,6 +1,14 @@
 app.js require('./bootstrap');
 package.json "bootstrap": "^4.6.0",
 
+    Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
+    Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
+    Route::get('/tickets/create', [TicketController::class, 'create'])->name('tickets.create');
+    Route::get('/tickets/{ticket}',[TicketController::class, 'show'])->name('tickets.show');
+    Route::get('/tickets/{ticket}/edit', [TicketController::class, 'edit'])->name('tickets.edit');
+    Route::put('/tickets/{ticket}', [TicketController::class, 'update'])->name('tickets.update');
+    Route::get('/tickets/{ticket}/delete', [TicketController::class, 'destroy'])->name('tickets.delete');
+
     Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
     Route::get('/contacts/create', [ContactController::class, 'create'])->name('contacts.create');
     Route::get('/contacts/{contact}', [ContactController::class, 'show'])->name('contacts.show');

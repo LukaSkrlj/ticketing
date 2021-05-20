@@ -1,5 +1,3 @@
-Enable permissions for editing tickets and contacts with different user ids
-Enable search by user name for admin
 Frontend - abstract components
 Search button hover and animate effect
-Add custom buttons for editing and deleting tickets
+Add custom buttons for editing and deleting tickets - nah
