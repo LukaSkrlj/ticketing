@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use App\Models\Ticket;
+use App\Models\TicketType;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -74,9 +75,11 @@ class TicketController extends Controller
 
         $users = User::all();
         $contacts = Contact::all();
+        $types = TicketType::all();
         return view('tickets.create', [
             'users'=>$users,
             'contacts'=>$contacts,
+            'types'=>$types
             ]);
     }
 
@@ -88,6 +91,11 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+        if (!$user->hasRole('admin')){
+            $request->request->add(['user_id'=>$user->id]);
+        }
+
         $ticket = new Ticket($this->validateTicket($request));
         $ticket->save();
 
@@ -156,11 +164,13 @@ class TicketController extends Controller
     protected function validateTicket(Request $request): array
     {
         return $request->validate([
-            'name' => 'required',
-            'description' => 'required',
+            'name' => 'required|alpha|max:150',
+            'description' => 'required|max:750',
             'type' => 'required',
             'contact_id' => 'exists:contacts,id',
-            'user_id' => 'exists:users,id'
+            'user_id' => 'exists:users,id',
+            'due_date' => 'nullable|date',
+            'is_done' => 'boolean'
         ]);
     }
 }

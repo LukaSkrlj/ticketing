@@ -5,6 +5,7 @@ use App\Http\Controllers\{
     ContactController,
     UserController,
     TicketController,
+    DashboardController
 };
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,7 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'display'])->name('dashboard');
 
     Route::resource('contacts', ContactController::class);
 
@@ -32,7 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::group(['middleware' => ['role:admin']], function () {
-    Route::resource('users', ContactController::class);
+    Route::resource('users', UserController::class);
 });
 
 require __DIR__.'/auth.php';

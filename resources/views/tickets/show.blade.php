@@ -19,7 +19,7 @@
                     <div class="p-4 md:w-1/2">
                         <h2 class="block font-medium text-sm text-gray-700">Type</h2>
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                            {{ $ticket->type }}
+                            {{ $ticket->type()->first()->name }}
                         </h2>
                     </div>
                     <div class="p-4 md:w-1/2">

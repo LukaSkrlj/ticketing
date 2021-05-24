@@ -29,6 +29,7 @@ class ContactFactory extends Factory
             'email' => $this->faker->unique()->safeEmail,
             'phone_number' => $this->faker->phoneNumber,
             'address' => $this->faker->address,
+            'personal_identification_number' => $this->faker->numberBetween(10000000,99999999),
             'user_id' => User::all()->random(1)->first()->id,
 
         ];

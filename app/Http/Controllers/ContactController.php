@@ -113,12 +113,13 @@ class ContactController extends Controller
     protected function validateContact(Request $request): array
     {
         return $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required',
+            'first_name' => 'required|alpha|max:30',
+            'last_name' => 'required|alpha|max:30',
+            'email' => 'required|email',
             'phone_number' => 'required',
             'address' => 'required',
-            'user_id' => 'exists:users,id'
+            'user_id' => 'exists:users,id',
+            'personal_identification_number'=>'required|unique'
         ]);
     }
 }

@@ -26,5 +26,13 @@ class Contact extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-
+    /**
+     * Get the contact's full name.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
 }

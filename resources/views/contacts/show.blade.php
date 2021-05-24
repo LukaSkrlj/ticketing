@@ -40,7 +40,23 @@
                                     {{ $contact->phone_number }}
                                 </h2>
                             </div>
+                            <div>
+                                <h2 class="block font-medium text-sm text-gray-700">PID</h2>
+                                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                                    {{ $contact->personal_identification_number }}
+                                </h2>
+                            </div>
                         </div>
+                        @role('admin')
+                        <div>
+                            <h2 class="block font-medium text-sm text-gray-700">Assigned user</h2>
+                            <a href="{{ route('users.show', ['user' => $contact->user()->first() ? $contact->user()->first()->id : 1]) }}">
+                                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                                {{ $contact->user()->first()->name }}
+                            </h2>
+                            </a>
+                        </div>
+                        @endrole
                     </div>
                 </div>
 

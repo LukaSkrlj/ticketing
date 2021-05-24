@@ -134,8 +134,8 @@ class UserController extends Controller
     protected function validateUser(Request $request): array
     {
         return $request->validate([
-            'name' => 'required',
-            'email' => 'required',
+            'name' => 'required|alpha|max:50',
+            'email' => 'required|email',
             'password' => ['required', 'confirmed', Password::min(8)]
         ]);
     }

@@ -31,7 +31,7 @@ class TicketPolicy
      */
     public function view(User $user, Ticket $ticket)
     {
-        return $user->id == $ticket->user_id|| Auth::user()->hasRole('admin');
+        return $user->id == $ticket->user_id || Auth::user()->hasRole('admin');
     }
 
     /**
@@ -54,7 +54,7 @@ class TicketPolicy
      */
     public function update(User $user, Ticket $ticket)
     {
-        return $user->id == $ticket->user_id|| Auth::user()->hasRole('admin');
+        return $user->id == $ticket->user_id || Auth::user()->hasRole('admin');
     }
 
     /**

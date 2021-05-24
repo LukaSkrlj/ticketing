@@ -24,16 +24,18 @@ class TicketFactory extends Factory
      */
     public function definition()
     {
-        $contact_id = Contact::all()->random(1)->first()->id;
-        $user_id = Contact::query()->find($contact_id)->user_id;
+        $contact_id = Contact::all()->random();
+        $user_id = $contact_id->user_id;
         $ticket_type_id = TicketType::all()->random(1)->first()->id;
 
         return [
             'user_id' => $user_id,
-            'contact_id' => $contact_id,
+            'contact_id' => $contact_id->id,
             'type' => $ticket_type_id,
             'name' => $this->faker->word,
             'description' => $this->faker->text(250),
+            'due_date' => $this->faker->dateTimeBetween('-1 days','+5 days'),
+            'is_done' => $this->faker->boolean(20),
         ];
     }
 }

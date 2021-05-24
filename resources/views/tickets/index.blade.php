@@ -11,11 +11,14 @@
             </div>
         </div>
     </x-slot>
+
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <div class="w-auto bg-transparent p-2 rounded-lg border-2 border-gray-600 bg-gray-100">
+
+                            
                             <form class="input-group flex justify-between" action="{{ route('tickets.index') }}" method="GET">
                                 <div class="flex justify-content-end">
                                     <h2 class="block font-medium text-lg py-0.5 mr-2 ml-1 text-gray-700">Search: </h2>
@@ -59,38 +62,52 @@
                         </div>
                         <div class="grid grid-cols-5 gap-6">
                         @foreach($tickets as $ticket)
+                            @php
+                            //if ticket is due tomorrow change color
+                                if (!$ticket->due_date)
+                                {
+                                    $color = "white";
+                                }elseif ($ticket->due_date < \Carbon\Carbon::today()){
+                                    $color = "red-400";
+                                }elseif ($ticket->due_date < \Carbon\Carbon::tomorrow()){
+                                    $color = "yellow-500";
+                                }else{
+                                    $color = "green-300";
+                                }
+                            @endphp
+
                             <a href="{{route('tickets.show', ['ticket'=>$ticket])}}">
-                            <div class="mx-8 flex flex-col md:flex-col md:max-w-4xl max-w-sm mx-auto bg-white border border-green-900 my-5 shadow-2xl rounded-lg hover:opacity-70">
+                                <div class="mx-8 flex flex-col md:flex-col md:max-w-4xl max-w-sm mx-auto bg-{{ $color }} border border-green-900 my-5 shadow-2xl rounded-lg transform hover:-translate-y-3 hover:bg-opacity-80">
 
-                                <div class="p-4 md:w-1/2">
-                                    <h2 class="block font-medium text-sm text-gray-700">Name</h2>
-                                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                        {{ $ticket->name }}
-                                    </h2>
-                                </div>
+                                    <div class="p-4 md:w-1/2">
+                                        <h2 class="block font-medium text-sm text-gray-700">Name</h2>
+                                        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                                            {{ $ticket->name }}
+                                        </h2>
+                                    </div>
 
-                                <div class="p-4 md:w-1/2">
-                                    <h2 class="block font-medium text-sm text-gray-700">Type</h2>
-                                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                        {{ $ticket->type }}
-                                    </h2>
-                                </div>
+                                    <div class="p-4 md:w-1/2">
+                                        <h2 class="block font-medium text-sm text-gray-700">Type</h2>
+                                        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                                            {{ $ticket->type()->first()->name }}
+                                        </h2>
+                                    </div>
 
-                                <div class="p-4">
-                                    <h2 class="block font-medium text-sm text-gray-700">Assigned user</h2>
-                                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                        {{ $ticket->user()->first()->name }}
-                                    </h2>
-                                </div>
-                                <div class="p-4 md:w-1/2">
-                                    <h2 class="block font-medium text-sm text-gray-700">Contact</h2>
-                                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                        {{ $ticket->contact()->first()->first_name }}
-                                        {{ $ticket->contact()->first()->last_name }}
-                                    </h2>
-                                </div>
+                                    <div class="p-4">
+                                        <h2 class="block font-medium text-sm text-gray-700">Assigned user</h2>
+                                        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                                            {{ $ticket->user()->first()->name }}
+                                        </h2>
+                                    </div>
+                                    <div class="p-4 md:w-1/2">
+                                        <h2 class="block font-medium text-sm text-gray-700">Contact</h2>
+                                        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                                            {{ $ticket->contact()->first()->first_name }}
+                                            {{ $ticket->contact()->first()->last_name }}
+                                        </h2>
+                                    </div>
 
-                            </div>
+                                </div>
                             </a>
                         @endforeach
                         </div>

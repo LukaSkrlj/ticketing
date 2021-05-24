@@ -18,10 +18,11 @@ class CreateTicketsTable extends Migration
             $table->unsignedBigInteger('contact_id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('name');
-            $table->string('type')->nullable();
+            $table->unsignedBigInteger('type')->nullable();
             $table->text('description');
             $table->timestamps();
-
+            $table->dateTime('due_date')->nullable();
+            $table->boolean('is_done');
 
             $table->foreign('contact_id')
                 ->references('id')
@@ -33,7 +34,10 @@ class CreateTicketsTable extends Migration
                 ->on('users')
                 ->onDelete('set null');
 
-
+            $table->foreign('type')
+                ->references('id')
+                ->on('ticket_types')
+                ->onDelete('set null');
         });
     }
 
