@@ -44,7 +44,7 @@ class UserController extends Controller
 
         }
 
-        return view('users.index', ['users' => $users->paginate(15)]);
+        return view('users.index', ['users' => $users->paginate(15)->withQueryString()]);
     }
 
     /**
@@ -65,6 +65,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'image' => 'nullable|mimes:jpg,png,jpeg|max:5048',
+        ]);
+
+        if ($request->image) {
+            $new_image_name = time() . '-' . $request->name . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $new_image_name);
+            $request->merge(['image_path' => $new_image_name]);
+        }else{
+            $request->merge(['image_path' => 'default_img.png']);
+        }
+
         $user = new User($this->validateUser($request));
         $user->save();
         $user->roles()->sync($request->roles);
@@ -134,8 +147,9 @@ class UserController extends Controller
     protected function validateUser(Request $request): array
     {
         return $request->validate([
-            'name' => 'required|alpha|max:50',
+            'name' => 'required|alpha|between:4,30',
             'email' => 'required|email',
+            'image_path' => 'nullable',
             'password' => ['required', 'confirmed', Password::min(8)]
         ]);
     }

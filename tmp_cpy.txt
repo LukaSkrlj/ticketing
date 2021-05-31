@@ -1,3 +1,18 @@
+public function definition()
+    {
+        $contact = Contact::all()->random();
+        $user_id = $contact->user_id;
+
+
+        return [
+            'user_id' => $user_id,
+            'contact_id' => $contact->id,
+        ];
+    }
+    <div class="mt-4 mx-4">
+            {{ $tickets->onEachSide(2)->links() }}
+        </div>
+
 app.js require('./bootstrap');
 package.json "bootstrap": "^4.6.0",
 

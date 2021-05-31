@@ -20,8 +20,12 @@
                         {{ __('Contacts') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('tickets.index')" :active="request()->routeIs('tickets.index')">
+                    <x-nav-link :href="route('tickets.index', ['completed' => false])" :active="request()->routeIs('tickets.index') && !request()->input('completed')">
                         {{ __('Tickets') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('tickets.index', ['completed' => true])" :active="request()->routeIs('tickets.index') && request()->input('completed')">
+                        {{ __('Completed tickets') }}
                     </x-nav-link>
 
                     @role('admin')
@@ -80,6 +84,24 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('contacts.index')" :active="request()->routeIs('contacts.index')">
+                {{ __('Contacts') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('tickets.index')" :active="request()->routeIs('tickets.index')">
+                {{ __('Tickets') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('tickets.index')" :active="request()->routeIs('tickets.index')">
+                {{ __('Completed tickets') }}
+            </x-responsive-nav-link>
+
+            @role('admin')
+            <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                {{ __('Users') }}
+            </x-responsive-nav-link>
+            @endrole
         </div>
 
         <!-- Responsive Settings Options -->

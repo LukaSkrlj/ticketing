@@ -17,7 +17,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
 
-                    <!--Search bar-->
+                        <!--Search bar-->
 
                     <div class="w-auto p-2 rounded-lg border-2 border-gray-600 bg-gray-100">
                         <form class="input-group flex justify-between" action="{{ route('contacts.index') }}" method="GET">
@@ -33,6 +33,7 @@
                                     <option value="last_name">Last name</option>
                                     <option value="phone_number">Phone number</option>
                                     <option value="email">Email</option>
+                                    <option value="personal_identification_number">PID</option>
                                     @role('admin')
                                     <option value="user_id">Assigned user</option>
                                     @endrole
@@ -62,21 +63,23 @@
                     </div>
 
                     @foreach($contacts as $contact)
-                        <div class="p-4 border-b border-gray-200 flex justify-between">
-                            <div class="py-2 text-xl font-medium">
-                                <a href="{{route('contacts.show', ['contact' => $contact->id]) }}">{{$contact->first_name}} {{$contact->last_name}}</a>
-                            </div>
-                            <div>
-                                <form action="{{ route('contacts.destroy',  $contact->id ) }}" class="flex items-end px-2 pt-1" onsubmit="return confirm('Are you sure?')" method="POST">
-                                    <a href="{{route('contacts.edit', ['contact' => $contact->id]) }}" class="flex items-end inline-flex mr-2 px-4 py-2 bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-900 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Edit</a>
+                        <a href="{{ route('contacts.show', ['contact'=>$contact]) }}" class="flex-grow">
+                            <div class="border-b group border-gray-200 flex justify-between hover:bg-gray-300 rounded-lg">
+                                <div class="py-6 px-4 text-xl font-medium group-hover:text-blue-900">
+                                    {{$contact->name}}
+                                </div>
+                                <div>
+                                    <form action="{{ route('contacts.destroy',  $contact->id ) }}" class="flex items-end px-2 pt-1" onsubmit="return confirm('Are you sure?')" method="POST">
+                                        <a href="{{route('contacts.edit', ['contact' => $contact->id]) }}" class="flex items-end inline-flex mr-2 px-4 py-2 bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-900 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Edit</a>
 
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="flex items-end px-4 py-2 bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-900 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150" type="submit">Delete</button>
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="mt-4 flex items-end px-4 py-2 bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-900 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150" type="submit">Delete</button>
 
-                                </form>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     @endforeach
 
                     <div class="mt-4 mx-4">

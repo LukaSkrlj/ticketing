@@ -54,7 +54,7 @@ class TicketPolicy
      */
     public function update(User $user, Ticket $ticket)
     {
-        return $user->id == $ticket->user_id || Auth::user()->hasRole('admin');
+        return $user->id == $ticket->user_id && !$ticket->is_done || Auth::user()->hasRole('admin');
     }
 
     /**
@@ -66,7 +66,7 @@ class TicketPolicy
      */
     public function delete(User $user, Ticket $ticket)
     {
-        return $user->id == $ticket->user_id || Auth::user()->hasRole('admin');
+        return Auth::user()->hasRole('admin');
     }
 
     /**
@@ -90,6 +90,6 @@ class TicketPolicy
      */
     public function forceDelete(User $user, Ticket $ticket)
     {
-        return $user->id == $ticket->user_id || Auth::user()->hasRole('admin');
+        return $user->id == $ticket->user_id && !$ticket->is_done || Auth::user()->hasRole('admin');
     }
 }

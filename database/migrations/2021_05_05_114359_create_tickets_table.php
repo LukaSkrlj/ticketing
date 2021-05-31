@@ -19,7 +19,7 @@ class CreateTicketsTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('name');
             $table->unsignedBigInteger('type')->nullable();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->dateTime('due_date')->nullable();
             $table->boolean('is_done');

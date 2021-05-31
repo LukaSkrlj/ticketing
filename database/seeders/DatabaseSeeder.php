@@ -8,8 +8,8 @@ use App\Models\{
     Contact
 };
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Mail;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $dispatcher = Ticket::getEventDispatcher();
+
+        Ticket::unsetEventDispatcher();
         Role::create(['name' => 'admin']);
         $user = User::query()->create([
             'name' => 'Admin',
@@ -37,7 +40,9 @@ class DatabaseSeeder extends Seeder
         $this->call(TicketTypesSeeder::class);
 
         User::factory(10)->create();
-        Contact::factory(20)->create();
-        Ticket::factory(40)->create();
+        Contact::factory(30)->create();
+        Ticket::factory(100)->create();
+
+        Ticket::setEventDispatcher($dispatcher);
     }
 }

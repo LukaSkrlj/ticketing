@@ -18,6 +18,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
+
+                        <!--Search bar-->
+
                     <div class="w-auto bg-transparent p-2 rounded-lg border-2 border-gray-600 bg-gray-100">
                         <form class="input-group flex justify-between" action="{{ route('tickets.index') }}" method="GET">
                             <div class="flex justify-content-end">
@@ -47,26 +50,24 @@
                                     </path>
                                 </svg>
                             </button>
-
                         </form>
                     </div>
                     @foreach($users as $user)
-                        <div class="p-4 border-b border-gray-200 flex justify-between">
-                            <div class="text-xl font-medium">
-                                <a href="{{ route('users.show', ['user'=>$user]) }}">{{$user->name}}</a>
-
+                        <a href="{{ route('users.show', ['user'=>$user]) }}" class="flex-grow">
+                            <div class="container group border-b border-gray-200 flex justify-between hover:bg-gray-300 rounded-lg">
+                                <div class="py-6 px-4 text-xl font-medium group-hover:text-blue-900">
+                                    {{$user->name}}
+                                </div>
+                                <div>
+                                    <form action="{{ route('users.destroy',  $user->id ) }}" class="flex items-end px-2 pt-1" onsubmit="return confirm('Are you sure?')" method="POST">
+                                        <a href="{{route('users.edit', ['user' => $user->id]) }}" class="flex items-end inline-flex mr-2 px-4 py-2 bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-900 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Edit</a>
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="mt-4 flex items-end px-4 py-2 bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-900 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150" type="submit">Delete</button>
+                                    </form>
+                                </div>
                             </div>
-                            <div>
-                                <form action="{{ route('users.destroy',  $user->id ) }}" class="flex items-end px-2 pt-1" onsubmit="return confirm('Are you sure?')" method="POST">
-                                    <a href="{{route('users.edit', ['user' => $user->id]) }}" class="flex items-end inline-flex mr-2 px-4 py-2 bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-900 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Edit</a>
-
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="flex items-end px-4 py-2 bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-900 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150" type="submit">Delete</button>
-
-                                </form>
-                            </div>
-                        </div>
+                        </a>
                     @endforeach
                     <div class="mt-4 mx-4">
                         {{ $users->onEachSide(2)->links() }}

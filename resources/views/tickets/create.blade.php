@@ -9,8 +9,8 @@
     <div class="container mx-auto">
         <div class="block">
             <div class="flex flex-col md:flex-col md:max-w-4xl max-w-sm mx-auto bg-white border border-green-900 my-5 shadow-2xl rounded-lg">
-                <x-auth-validation-errors class="mb-4 pl-5 pt-5" :errors="$errors" />
-                <form method="POST" action="{{ route('tickets.store') }}">
+                <x-auth-validation-errors class="pl-8 pt-8" :errors="$errors" />
+                <form method="POST" action="{{ route('tickets.store') }}" class="p-3">
                     @csrf
                     <div class="p-5 md:w-1/2">
                         <h2 class="block font-medium text-sm text-gray-700">Name</h2>
@@ -43,8 +43,6 @@
                             </select>
                         </div>
                     </div>
-
-
 
                     @role('admin')
                     <div class="p-5 md:w-1/2">

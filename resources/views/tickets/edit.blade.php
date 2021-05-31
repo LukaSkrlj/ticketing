@@ -9,7 +9,7 @@
 
     <div class="container mx-auto">
         <div class="block">
-            <div class="flex flex-col md:flex-col md:max-w-4xl max-w-sm mx-auto bg-white border border-green-900 my-5 shadow-2xl rounded-lg">
+            <div class="flex flex-col md:flex-col md:max-w-4xl max-w-sm mx-auto bg-white my-5 shadow-2xl rounded-lg">
                 <x-auth-validation-errors class="mb-4 pl-5 pt-5" :errors="$errors" />
                 <form method="POST" action="{{ route('tickets.update', ['ticket'=>$ticket->id]) }}">
                     @method('PUT')
@@ -31,6 +31,7 @@
                         <textarea id="description" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" type="text" name="description" autofocus ></textarea>
                     </div>
 
+                    @role('admin')
                     <div class="p-5 md:w-1/2">
                         <div class="form-group">
                             <h2 class="block font-medium text-sm text-gray-700">Users name</h2>
@@ -41,6 +42,7 @@
                             </select>
                         </div>
                     </div>
+                    @endrole
 
                     <div class="p-5 md:w-1/2">
                         <div class="form-group">

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Events\TicketCreated;
+use App\Events\UserCreated;
+use App\Listeners\SendUserCreatedNotification;
 use App\Listeners\SendTicketCreatedNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -23,6 +25,9 @@ class EventServiceProvider extends ServiceProvider
         TicketCreated::class => [
             SendTicketCreatedNotification::class,
         ],
+        UserCreated::class => [
+            SendUserCreatedNotification::class,
+        ]
     ];
 
     /**

@@ -19,7 +19,7 @@ use App\Http\Controllers\{
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('login'));
 });
 
 Route::group(['middleware' => ['auth']], function () {
@@ -28,6 +28,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('contacts', ContactController::class);
 
     Route::resource('tickets', TicketController::class);
+    Route::get('/tickets/complete/{ticket}', [TicketController::class, 'complete'])->name('tickets.complete');
 });
 
 Route::group(['middleware' => ['role:admin']], function () {

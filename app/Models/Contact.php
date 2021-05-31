@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+    protected $appends = array('name');
     /**
      * @var int|mixed
      */
@@ -31,7 +33,7 @@ class Contact extends Model
      *
      * @return string
      */
-    public function getFullNameAttribute(): string
+    public function getNameAttribute(): string
     {
         return "{$this->first_name} {$this->last_name}";
     }
