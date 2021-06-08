@@ -22,7 +22,7 @@
 
                     <div class="p-5 md:w-1/2">
                         <h2 class="block font-medium text-sm text-gray-700">Type</h2>
-                        <x-input id="type" class="block mt-1 w-full" type="text" name="type" value="{{$ticket->type}}" autofocus />
+                        <x-input id="ticket_type_id" class="block mt-1 w-full" type="text" name="ticket_type_id" value="{{$ticket->ticket_type_id}}" autofocus />
                     </div>
 
 

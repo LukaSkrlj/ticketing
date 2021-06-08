@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactRequest;
 use App\Models\Ticket;
 use App\Models\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Contact;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Spatie\Permission\Traits\HasRoles;
-use Spatie\Permission\Models\Role;
+
 
 class ContactController extends Controller
 {
@@ -25,6 +25,7 @@ class ContactController extends Controller
         $order = $request->query('order');
         $search = $request->query('search');
         $search_option = $request->query('search_option');
+        $descending_order = $request->query('descending_order');
 
         if (!$user->hasRole('admin')) {
 
@@ -56,7 +57,7 @@ class ContactController extends Controller
 
         if ($order) {
 
-            $contacts = $contacts->orderBy($order);
+            $contacts = $descending_order ? $contacts->orderByDesc($order) : $contacts->orderBy($order);
 
         }
 
@@ -83,12 +84,15 @@ class ContactController extends Controller
         return view('contacts.create');
     }
 
-    public function store(Request $request)
+    public function store(ContactRequest $request)
     {
+        $validated_request = $request->validated();
 
-        $contact = new Contact($this->validateContact($request));
-        $contact->user_id = auth()->id();
-        $contact->save();
+        if (!Arr::exists($validated_request,'user_id')){
+            $validated_request['user_id'] = Auth::user()->id;
+        }
+
+        Contact::query()->create($validated_request);
 
         return redirect(route('contacts.index'));
 
@@ -101,11 +105,11 @@ class ContactController extends Controller
         return view('contacts.edit', compact('contact'));
     }
 
-    public function update(Request $request, Contact $contact)
+    public function update(ContactRequest $request, Contact $contact)
     {
         $this->authorize('update', $contact);
 
-        $contact->update($this->validateContact($request));
+        $contact->update($request->validated());
 
         return redirect($contact->path());
     }
@@ -116,18 +120,5 @@ class ContactController extends Controller
         $contact = Contact::query()->findOrFail($contact->id);
         $contact->delete();
         return redirect('/contacts')->with('success', 'Contact deleted');
-    }
-
-    protected function validateContact(Request $request): array
-    {
-        return $request->validate([
-            'first_name' => 'required|alpha|max:30',
-            'last_name' => 'required|alpha|max:30',
-            'email' => 'required|email',
-            'phone_number' => 'required',
-            'address' => 'required',
-            'user_id' => 'exists:users,id',
-            'personal_identification_number' => 'required|unique'
-        ]);
     }
 }

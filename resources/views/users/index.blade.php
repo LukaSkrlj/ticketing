@@ -22,7 +22,7 @@
                         <!--Search bar-->
 
                     <div class="w-auto bg-transparent p-2 rounded-lg border-2 border-gray-600 bg-gray-100">
-                        <form class="input-group flex justify-between" action="{{ route('tickets.index') }}" method="GET">
+                        <form class="input-group flex justify-between" action="{{ route('users.index') }}" method="GET">
                             <div class="flex justify-content-end">
                                 <h2 class="block font-medium text-lg py-0.5 mr-2 ml-1 text-gray-700">Search: </h2>
                                 <input type="text" name="search" placeholder="Search" class="form-control h-8 w-52 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
@@ -44,8 +44,8 @@
                                 </select>
                             </div>
 
-                            <button type="submit" class="bg-transparent h-6 w-8 border-gray-600">
-                                <svg class="h-6 w-8 left-0 my-1 stroke-current text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <button type="submit" class="py-1 bg-transparent h-8 w-8 border-gray-600">
+                                <svg class="h-6 w-8 left-0 stroke-current text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z">
                                     </path>
                                 </svg>

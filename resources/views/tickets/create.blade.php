@@ -20,7 +20,7 @@
                     <div class="p-5 md:w-1/2">
                         <div class="form-group">
                             <h2 class="block font-medium text-sm text-gray-700">Type</h2>
-                            <select class="form-control rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="type">
+                            <select class="form-control rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="ticket_type_id">
                                 @foreach($types as $type)
                                     <option value="{{$type->id}}">{{$type->name}}</option>
                                 @endforeach

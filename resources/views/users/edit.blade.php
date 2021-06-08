@@ -13,7 +13,7 @@
                         <!-- Validation Errors -->
                         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-                        <form method="POST" action="{{ route('users.update', ['user' => $user->id]) }}">
+                        <form method="POST" action="{{ route('users.update', ['user' => $user->id]) }}" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
 
@@ -53,32 +53,32 @@
                             <!-- Image -->
                             <div class="mt-4">
                                 <x-label for="image" :value="__('Image')" />
-
                                 <div class="bg-grey-lighter">
                                     <label class="w-64 flex flex-col items-center px-4 py-6 bg-white text-gray-600 rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-gray-600 hover:text-white">
                                         <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                             <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
                                         </svg>
                                         <span class="mt-2 text-base leading-normal">Select a file</span>
-                                        <input type='file' class="hidden" />
+                                        <input id="image" name="image" type="file" class="hidden" />
                                     </label>
                                 </div>
                             </div>
 
                             <!-- Roles -->
+                            @role('admin')
                             <div class="block mt-4">
                                 @foreach($roles as $role)
                                     <div class="form-check">
 
                                         <input id="{{$role->name}}" type="checkbox" value="{{$role->id}}" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="roles[]">
                                         <label for="{{$role->name}}" class="inline-flex items-center block font-medium text-sm text-gray-700">
-                                            {{$role->name}}
+                                            Give <strong> {!! "&nbsp;" !!}{!! $role->name !!}{!! "&nbsp;" !!} </strong> privileges
                                         </label>
                                     </div>
 
                                 @endforeach
-
                             </div>
+                            @endrole
                             <div class="flex items-center justify-end mt-4">
                                 <x-button class="ml-3">
                                     {{ __('Save') }}

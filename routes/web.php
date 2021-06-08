@@ -22,16 +22,18 @@ Route::get('/', function () {
     return redirect(route('login'));
 });
 
+Route::get('/test', function () {
+    return view('test');
+});
+
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class, 'display'])->name('dashboard');
 
     Route::resource('contacts', ContactController::class);
 
     Route::resource('tickets', TicketController::class);
-    Route::get('/tickets/complete/{ticket}', [TicketController::class, 'complete'])->name('tickets.complete');
-});
 
-Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('users', UserController::class);
 });
 

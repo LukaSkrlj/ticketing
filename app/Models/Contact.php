@@ -10,13 +10,8 @@ class Contact extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $guarded = ['id', 'created_at', 'updated_at']; // za sve makni tabels i primary
     protected $appends = array('name');
-    /**
-     * @var int|mixed
-     */
-    protected $table = 'contacts';
-    protected $primaryKey = 'id';
 
     public function path(): string
     {

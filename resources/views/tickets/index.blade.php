@@ -54,8 +54,15 @@
                                     </select>
                                 </div>
 
-                                <button id="completed" name="completed" value={{ collect($tickets->items())->pluck('is_done')->first() }} type="submit" class="bg-transparent h-6 w-8 border-gray-600">
-                                    <svg class="h-6 w-8 left-0 my-1 stroke-current text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <div class="flex justify-between">
+                                    <input id="descending_order" type="checkbox" value="true" class="mt-2 rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="descending_order">
+                                    <label for="descending_order" class="ml-2 block font-medium text-lg py-0.5 text-gray-700">
+                                        Descending
+                                    </label>
+                                </div>
+
+                                <button id="completed" name="completed" value={{ app('request')->input('completed') }} type="submit" class="py-1 bg-transparent h-8 w-8 border-gray-600">
+                                    <svg class="h-6 w-8 left-0 stroke-current text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z">
                                         </path>
                                     </svg>

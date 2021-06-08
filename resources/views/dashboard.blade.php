@@ -4,7 +4,7 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-    <div class="grid grid-cols-3">
+    <div class="grid grid-cols-3 relative">
         <div class="py-12 col-span-2">
             <div class="ml-8 max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

@@ -32088,6 +32088,31 @@ select {
   --tw-backdrop-sepia: sepia(100%);
 }
 
+body {
+  margin: 0;
+  background: #F3F4F6;
+}
+
+#canvas {
+  position: relative;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.content {
+  position: relative;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

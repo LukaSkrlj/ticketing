@@ -21,6 +21,7 @@ trait SearchTrait{
         $order = $request->query('order');
         $search = $request->query('search');
         $search_option = $request->query('search_option');
+        $descending_order = $request->query('descending_order');
         $search_options_array = Schema::getColumnListing($tickets->first()->getTable());
         $query = false;
 
@@ -65,9 +66,9 @@ trait SearchTrait{
 
         }
 
-        if (in_array($order, $search_options_array)) {
+        if (in_array($order, $search_options_array)) { //provjeri unutar requesta inarray
 
-            $tickets = $tickets->orderBy($order);
+            $tickets = $descending_order ? $tickets->orderByDesc($order) : $tickets->orderBy($order);
 
         }
 

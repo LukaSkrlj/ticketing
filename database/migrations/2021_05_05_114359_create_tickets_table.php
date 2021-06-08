@@ -15,29 +15,14 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('contact_id');
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreignId('contact_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->unsignedBigInteger('type')->nullable();
+            $table->foreignId('ticket_type_id')->constrained()->cascadeOnDelete();
             $table->text('description')->nullable();
             $table->timestamps();
             $table->dateTime('due_date')->nullable();
-            $table->boolean('is_done');
-
-            $table->foreign('contact_id')
-                ->references('id')
-                ->on('contacts')
-                ->onDelete('cascade');
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('set null');
-
-            $table->foreign('type')
-                ->references('id')
-                ->on('ticket_types')
-                ->onDelete('set null');
+            $table->boolean('is_done')->nullable()->default(false);
         });
     }
 

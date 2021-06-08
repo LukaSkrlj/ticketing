@@ -20,14 +20,10 @@ class CreateContactsTable extends Migration
             $table->string('email');
             $table->string('phone_number');
             $table->string('address');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('personal_identification_number')->unique();
             $table->timestamps();
 
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
         });
     }
 

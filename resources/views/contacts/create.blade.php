@@ -32,6 +32,10 @@
                                     <h2 class="block font-medium text-sm text-gray-700">Phone number</h2>
                                     <x-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" :value="old('phone_number')" autofocus />
                                 </div>
+                                <div>
+                                    <h2 class="block font-medium text-sm text-gray-700">PID</h2>
+                                    <x-input id="personal_identification_number" class="block mt-1 w-full" type="text" name="personal_identification_number" :value="old('personal_identification_number')" autofocus />
+                                </div>
                             </div>
                         </div>
                         <div class="flex items-center justify-end mt-4">
